@@ -1,0 +1,6 @@
+{
+  "name": "MedQueue - Smart Patient Appointment & Queue Management System",
+  "description": "Enterprise-grade Healthcare Frontend for Patient Appointments, Real-time Queue Tracking, Doctor Schedules, Reception Walk-ins, and Hospital Analytics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
