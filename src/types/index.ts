@@ -114,6 +114,23 @@ export interface Appointment {
 }
 
 export type QueueStatus = 'waiting' | 'called' | 'in-progress' | 'completed' | 'skipped' | 'cancelled';
+export type TriageStatus = 'red' | 'yellow' | 'green';
+
+export interface TriageAssessmentInput {
+  chiefComplaint?: string;
+  painScore?: number;
+  systolicBloodPressure?: number;
+  pulse?: number;
+  oxygenSaturation?: number;
+  temperature?: number;
+  age?: number;
+  trauma?: boolean;
+  breathingDifficulty?: boolean;
+  chestPain?: boolean;
+  severeBleeding?: boolean;
+  lossOfConsciousness?: boolean;
+  pregnancy?: boolean;
+}
 
 export interface QueueItem {
   id: string;
@@ -138,6 +155,9 @@ export interface QueueItem {
   completedTime?: string;
   isPriority: boolean;
   type: 'appointment' | 'walk-in';
+  triageStatus?: TriageStatus;
+  triageReason?: string;
+  triageScore?: number;
 }
 
 export interface ConsultationNote {

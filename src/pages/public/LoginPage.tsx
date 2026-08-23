@@ -40,8 +40,18 @@ export const LoginPage: React.FC = () => {
     setIsLoading(true);
 
     setTimeout(() => {
-      login(email, role);
+      const success = login(email, role, password);
       setIsLoading(false);
+
+      if (!success) {
+        addToast({
+          type: 'error',
+          title: 'Invalid credentials',
+          message: 'Please check your email and password, then try again.',
+        });
+        return;
+      }
+
       addToast({
         type: 'success',
         title: 'Welcome back!',

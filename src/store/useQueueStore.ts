@@ -1,7 +1,51 @@
 import { create } from 'zustand';
-import { QueueItem, QueueStatus } from '../types';
+import { QueueItem, QueueStatus, TriageAssessmentInput, TriageStatus } from '../types';
 import { mockQueueItems } from '../data/mockData';
 import { useToastStore } from './useToastStore';
+
+export const evaluateTriageStatus = (input: TriageAssessmentInput): TriageStatus => {
+  const complaint = (input.chiefComplaint || '').toLowerCase();
+  const painScore = input.painScore ?? 0;
+  const systolic = input.systolicBloodPressure ?? 0;
+  const pulse = input.pulse ?? 0;
+  const oxygen = input.oxygenSaturation ?? 100;
+  const temperature = input.temperature ?? 37;
+  const age = input.age ?? 30;
+
+  const criticalTriggers =
+    input.lossOfConsciousness ||
+    input.severeBleeding ||
+    input.breathingDifficulty ||
+    input.trauma ||
+    input.chestPain ||
+    oxygen < 90 ||
+    systolic <= 90 ||
+    pulse >= 130 ||
+    (complaint.includes('chest pain') && (systolic >= 170 || pulse >= 120));
+
+  if (criticalTriggers) {
+    return 'red';
+  }
+
+  const moderateTriggers =
+    painScore >= 6 ||
+    systolic >= 150 ||
+    pulse >= 110 ||
+    oxygen < 95 ||
+    temperature >= 38.5 ||
+    (complaint.includes('abdominal') && painScore >= 4) ||
+    (input.pregnancy && painScore >= 5);
+
+  if (moderateTriggers) {
+    return 'yellow';
+  }
+
+  if (age > 65 && painScore >= 4) {
+    return 'yellow';
+  }
+
+  return 'green';
+};
 
 interface QueueState {
   queue: QueueItem[];
@@ -18,6 +62,9 @@ interface QueueState {
     doctorId: string;
     departmentId: string;
     isPriority?: boolean;
+    triageStatus?: TriageStatus;
+    triageReason?: string;
+    triageScore?: number;
   }) => QueueItem;
   updateQueueStatus: (queueId: string, status: QueueStatus) => void;
   getPatientActiveTicket: (patientId: string) => QueueItem | undefined;
@@ -149,6 +196,10 @@ export const useQueueStore = create<QueueState>((set, get) => ({
     const prefix = data.departmentId === 'dept-1' ? 'CARD' : data.departmentId === 'dept-5' ? 'GEN' : 'OPD';
     const ticketNumber = `${prefix}-${ticketSeq}`;
 
+    const triageStatus = data.triageStatus ?? 'green';
+    const triageReason = data.triageReason ?? 'Routine assessment';
+    const triageScore = data.triageScore ?? 0;
+
     const newTicket: QueueItem = {
       id: `q-${Date.now()}`,
       ticketNumber,
@@ -167,8 +218,11 @@ export const useQueueStore = create<QueueState>((set, get) => ({
       position: newPosition,
       estimatedWaitMinutes: newPosition * 10,
       checkInTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      isPriority: !!data.isPriority,
+      isPriority: !!data.isPriority || triageStatus === 'red',
       type: 'walk-in',
+      triageStatus,
+      triageReason,
+      triageScore,
     };
 
     set((state) => ({ queue: [...state.queue, newTicket] }));

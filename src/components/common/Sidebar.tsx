@@ -35,7 +35,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           { to: '/patient/book-appointment', label: 'Book Appointment', icon: <Calendar className="w-4 h-4" /> },
           { to: '/patient/queue-status', label: 'Live Queue Status', icon: <Clock className="w-4 h-4" /> },
           { to: '/patient/upcoming-appointments', label: 'Upcoming', icon: <Calendar className="w-4 h-4" /> },
-          { to: '/patient/appointment-history', label: 'History', icon: <History className="w-4 h-4" /> },
+          { to: '/patient/history', label: 'History', icon: <History className="w-4 h-4" /> },
           { to: '/patient/notifications', label: 'Notifications', icon: <Bell className="w-4 h-4" /> },
           { to: '/patient/profile', label: 'Profile & Settings', icon: <User className="w-4 h-4" /> },
         ];

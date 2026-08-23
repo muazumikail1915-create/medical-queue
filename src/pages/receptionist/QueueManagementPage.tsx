@@ -49,9 +49,19 @@ export const QueueManagementPage: React.FC = () => {
     {
       header: 'Status',
       accessor: (row) => (
-        <Badge variant={row.status === 'in-progress' ? 'in-progress' : row.status === 'called' ? 'called' : row.status === 'waiting' ? 'waiting' : 'completed'}>
-          {row.status.toUpperCase()}
-        </Badge>
+        <div className="flex flex-col gap-1">
+          <Badge variant={row.status === 'in-progress' ? 'in-progress' : row.status === 'called' ? 'called' : row.status === 'waiting' ? 'waiting' : 'completed'}>
+            {row.status.toUpperCase()}
+          </Badge>
+          {row.triageStatus && (
+            <Badge
+              variant={row.triageStatus === 'red' ? 'danger' : row.triageStatus === 'yellow' ? 'warning' : 'success'}
+              className="w-fit"
+            >
+              {row.triageStatus.toUpperCase()}
+            </Badge>
+          )}
+        </div>
       ),
     },
     {

@@ -29,7 +29,16 @@ export const RegisterPage: React.FC = () => {
       return;
     }
 
-    login(email, 'patient');
+    const success = login(email, 'patient', password);
+    if (!success) {
+      addToast({
+        type: 'error',
+        title: 'Registration failed',
+        message: 'Please provide a valid email and a password with at least 8 characters.',
+      });
+      return;
+    }
+
     addToast({
       type: 'success',
       title: 'Registration Successful!',
