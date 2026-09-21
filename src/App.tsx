@@ -16,6 +16,7 @@ import { NotFoundPage } from './pages/public/NotFoundPage';
 
 // Patient Pages
 import { PatientDashboard } from './pages/patient/PatientDashboard';
+import { PatientLHRPage } from './pages/patient/PatientLHRPage';
 import { BookAppointmentPage } from './pages/patient/BookAppointmentPage';
 import { LiveQueueStatusPage } from './pages/patient/LiveQueueStatusPage';
 import { UpcomingAppointmentsPage } from './pages/patient/UpcomingAppointmentsPage';
@@ -33,6 +34,7 @@ import { ReceptionDoctorsPage } from './pages/receptionist/ReceptionDoctorsPage'
 
 // Doctor Pages
 import { DoctorDashboard } from './pages/doctor/DoctorDashboard';
+import { DoctorLHRPage } from './pages/doctor/DoctorLHRPage';
 import { DoctorQueuePage } from './pages/doctor/DoctorQueuePage';
 import { DoctorSchedulePage } from './pages/doctor/DoctorSchedulePage';
 import { DoctorPatientDetailsPage } from './pages/doctor/DoctorPatientDetailsPage';
@@ -40,6 +42,7 @@ import { DoctorProfilePage } from './pages/doctor/DoctorProfilePage';
 
 // Admin Pages
 import { AdminDashboard } from './pages/admin/AdminDashboard';
+import { AdminLHRAuditPage } from './pages/admin/AdminLHRAuditPage';
 import { AdminAnalyticsPage } from './pages/admin/AdminAnalyticsPage';
 import { AdminDoctorsPage } from './pages/admin/AdminDoctorsPage';
 import { AdminPatientsPage } from './pages/admin/AdminPatientsPage';
@@ -91,6 +94,7 @@ export const App: React.FC = () => {
           {/* Patient Portal */}
           <Route element={<DashboardLayout requiredRole="patient" />}>
             <Route path="/patient" element={<PatientDashboard />} />
+            <Route path="/patient/lhr" element={<PatientLHRPage />} />
             <Route path="/patient/book-appointment" element={<BookAppointmentPage />} />
             <Route path="/patient/queue-status" element={<LiveQueueStatusPage />} />
             <Route path="/patient/upcoming-appointments" element={<UpcomingAppointmentsPage />} />
@@ -112,8 +116,10 @@ export const App: React.FC = () => {
           {/* Doctor Portal */}
           <Route element={<DashboardLayout requiredRole="doctor" />}>
             <Route path="/doctor" element={<DoctorDashboard />} />
+            <Route path="/doctor/lhr" element={<DoctorLHRPage />} />
             <Route path="/doctor/queue" element={<DoctorQueuePage />} />
             <Route path="/doctor/schedule" element={<DoctorSchedulePage />} />
+            <Route path="/doctor/patient" element={<DoctorPatientDetailsPage />} />
             <Route path="/doctor/patient/:id" element={<DoctorPatientDetailsPage />} />
             <Route path="/doctor/profile" element={<DoctorProfilePage />} />
           </Route>
@@ -121,6 +127,7 @@ export const App: React.FC = () => {
           {/* Administrator Portal */}
           <Route element={<DashboardLayout requiredRole="admin" />}>
             <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/lhr-audit" element={<AdminLHRAuditPage />} />
             <Route path="/admin/analytics" element={<AdminAnalyticsPage />} />
             <Route path="/admin/doctors" element={<AdminDoctorsPage />} />
             <Route path="/admin/patients" element={<AdminPatientsPage />} />
@@ -143,3 +150,4 @@ export const App: React.FC = () => {
 };
 
 export default App;
+

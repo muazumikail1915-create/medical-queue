@@ -5,12 +5,19 @@ import { Sidebar } from '../components/common/Sidebar';
 import { Footer } from '../components/common/Footer';
 import { ToastContainer } from '../components/ui/ToastContainer';
 import { useAuthStore } from '../store/useAuthStore';
+import { UserRole } from '../types';
 
-export const DashboardLayout: React.FC = () => {
+export interface DashboardLayoutProps {
+  requiredRole?: UserRole;
+}
+
+export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ requiredRole }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { role } = useAuthStore();
 
-  const roleTitles = {
+  const activeRole = requiredRole || role;
+
+  const roleTitles: Record<UserRole, string> = {
     patient: 'Patient Care Portal',
     receptionist: 'Reception & Desk Management',
     doctor: 'Doctor Consultation Workspace',
@@ -19,7 +26,7 @@ export const DashboardLayout: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-[#09090b] text-slate-900 dark:text-slate-200 font-sans transition-colors">
-      <Header onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} title={roleTitles[role]} />
+      <Header onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} title={roleTitles[activeRole]} />
 
       <div className="flex flex-1">
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />

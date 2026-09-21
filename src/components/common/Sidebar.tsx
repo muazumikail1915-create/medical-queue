@@ -14,6 +14,8 @@ import {
   Building2,
   BarChart3,
   FileSpreadsheet,
+  FolderHeart,
+  ShieldCheck,
   UserPlus,
   ClipboardList,
   LogOut,
@@ -32,6 +34,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       case 'patient':
         return [
           { to: '/patient', label: 'Dashboard', icon: <LayoutDashboard className="w-4 h-4" /> },
+          { to: '/patient/lhr', label: 'My Health Record (LHR)', icon: <FolderHeart className="w-4 h-4 text-blue-500" /> },
           { to: '/patient/book-appointment', label: 'Book Appointment', icon: <Calendar className="w-4 h-4" /> },
           { to: '/patient/queue-status', label: 'Live Queue Status', icon: <Clock className="w-4 h-4" /> },
           { to: '/patient/upcoming-appointments', label: 'Upcoming', icon: <Calendar className="w-4 h-4" /> },
@@ -51,6 +54,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       case 'doctor':
         return [
           { to: '/doctor', label: 'Dashboard', icon: <LayoutDashboard className="w-4 h-4" /> },
+          { to: '/doctor/lhr', label: 'Longitudinal Records (LHR)', icon: <FolderHeart className="w-4 h-4 text-blue-500" /> },
           { to: '/doctor/queue', label: 'Live Consultation Queue', icon: <Clock className="w-4 h-4" /> },
           { to: '/doctor/schedule', label: 'My Schedule', icon: <Calendar className="w-4 h-4" /> },
           { to: '/doctor/profile', label: 'My Profile & Status', icon: <User className="w-4 h-4" /> },
@@ -58,6 +62,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       case 'admin':
         return [
           { to: '/admin', label: 'Executive Dashboard', icon: <LayoutDashboard className="w-4 h-4" /> },
+          { to: '/admin/lhr-audit', label: 'LHR Audit & Security', icon: <ShieldCheck className="w-4 h-4 text-emerald-500" /> },
           { to: '/admin/analytics', label: 'Analytics & Trends', icon: <BarChart3 className="w-4 h-4" /> },
           { to: '/admin/doctors', label: 'Manage Doctors', icon: <Stethoscope className="w-4 h-4" /> },
           { to: '/admin/patients', label: 'Manage Patients', icon: <Users className="w-4 h-4" /> },
